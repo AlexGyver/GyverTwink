@@ -7,4 +7,3 @@
 - **libraries** - библиотеки для esp8266
 - **processing** - исходник приложения
 - **schemes** - схемы
-- **software** - билды приложения для Windows/Android

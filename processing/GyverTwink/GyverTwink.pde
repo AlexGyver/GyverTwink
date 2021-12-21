@@ -1,5 +1,6 @@
 // Исходник приложения GyverTwink
 // Написано на коленке, возможно позже переделаю =(
+// v1.0
 
 // ============== ВАЖНО! ===============
 // Установить библиотеки из менеджера библиотек:
@@ -18,11 +19,11 @@
 
 // ============== НАСТРОЙКИ ===============
 // true - Android режим, false - PC режим
-private static final boolean androidMode = true;
+private static final boolean androidMode = false;
 
 // для PC режима раскомментируй две строки ниже. Для Android - закомментируй
-//void openKeyboard() {}
-//void closeKeyboard() {}
+void openKeyboard() {}
+void closeKeyboard() {}
 
 /// масштаб интерфейса
 float androidScale = 3.0;
@@ -96,7 +97,7 @@ void draw() {
   if (searchF) {
     if (millis() - actionTmr > 800) {
       searchF = false;
-      if (ips.size() == 0) {ips.append("not connected");println("not found");}
+      if (ips.size() == 0) ips.append("not connected");
       else requestCfg();
     }
   } else ui();

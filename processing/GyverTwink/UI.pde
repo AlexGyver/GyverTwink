@@ -139,6 +139,9 @@ void effTab() {
 }
 
 void calibTab() {
+  // камера не стартовала в PC режиме
+  if (!androidMode && Wcam == null) return;
+  
   if (camReady) {
     camReady = false;
     readCam();
