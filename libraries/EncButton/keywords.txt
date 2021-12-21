@@ -1,0 +1,100 @@
+#######################################
+# Syntax Coloring Map For EncButton
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+EncButton	KEYWORD1
+EncButton2	KEYWORD1
+
+EB_FAST	KEYWORD1
+EB_DEB	KEYWORD1
+EB_HOLD	KEYWORD1
+EB_STEP	KEYWORD1
+EB_CLICK	KEYWORD1
+
+EB_BETTER_ENC	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+tick	KEYWORD2
+tickISR	KEYWORD2
+getState	KEYWORD2
+resetState	KEYWORD2
+checkCallback	KEYWORD2
+setPins	KEYWORD2
+
+press	KEYWORD2
+release	KEYWORD2
+releaseStep	KEYWORD2
+fast	KEYWORD2
+turn	KEYWORD2
+turnH	KEYWORD2
+right	KEYWORD2
+left	KEYWORD2
+rightH	KEYWORD2
+leftH	KEYWORD2
+click	KEYWORD2
+held	KEYWORD2
+hold	KEYWORD2
+step	KEYWORD2
+
+getDir	KEYWORD2
+counter	KEYWORD2
+state	KEYWORD2
+hasClicks	KEYWORD2
+clicks	KEYWORD2
+attach	KEYWORD2
+detach	KEYWORD2
+attachClicks	KEYWORD2
+detachClicks	KEYWORD2
+pullUp	KEYWORD2
+holdEncButton	KEYWORD2
+setHoldTimeout	KEYWORD2
+setButtonLevel	KEYWORD2
+
+# deprecated
+isPress	KEYWORD2
+isRelease	KEYWORD2
+isFast	KEYWORD2
+isTurn	KEYWORD2
+isTurnH	KEYWORD2
+isRight	KEYWORD2
+isLeft	KEYWORD2
+isRightH	KEYWORD2
+isLeftH	KEYWORD2
+isClick	KEYWORD2
+isHolded	KEYWORD2
+isHeld	KEYWORD2
+isHold	KEYWORD2
+isStep	KEYWORD2
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+EB_TICK	LITERAL1
+EB_CALLBACK	LITERAL1
+
+EB_BTN	LITERAL1
+EB_ENC	LITERAL1
+EB_ENCBTN	LITERAL1
+
+VIRT_BTN	LITERAL1
+VIRT_ENC	LITERAL1
+VIRT_ENCBTN	LITERAL1
+
+TURN_HANDLER	LITERAL1
+TURN_H_HANDLER	LITERAL1
+RIGHT_HANDLER	LITERAL1
+LEFT_HANDLER	LITERAL1
+RIGHT_H_HANDLER	LITERAL1
+LEFT_H_HANDLER	LITERAL1
+CLICK_HANDLER	LITERAL1
+HOLDED_HANDLER	LITERAL1
+STEP_HANDLER	LITERAL1
+HOLD_HANDLER	LITERAL1
+CLICKS_HANDLER	LITERAL1
+PRESS_HANDLER	LITERAL1
+RELEASE_HANDLER	LITERAL1

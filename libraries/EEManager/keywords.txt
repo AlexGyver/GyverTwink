@@ -1,0 +1,29 @@
+#######################################
+# Syntax Coloring Map For EEManager
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+EEManager	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+setTimeout	KEYWORD2
+begin	KEYWORD2
+updateNow	KEYWORD2
+update	KEYWORD2
+tick	KEYWORD2
+reset	KEYWORD2
+dataSize	KEYWORD2
+blockSize	KEYWORD2
+startAddr	KEYWORD2
+endAddr	KEYWORD2
+nextAddr	KEYWORD2
+
+
+#######################################
+# Constants (LITERAL1)
+#######################################
