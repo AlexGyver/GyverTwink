@@ -108,7 +108,7 @@ void draw() {
 
   // рутина калибровки
   if (calibF) {
-    if (millis() - actionTmr > 500) {
+    if (millis() - actionTmr > 400) {
       actionTmr = millis();
       if (calibCount == 0) makeMap(0);
       if (calibCount > int(leds.text)) {
