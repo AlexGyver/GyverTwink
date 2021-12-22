@@ -16,13 +16,13 @@
 
 #define BTN_PIN D3      // пин кнопки
 #define LED_PIN D1      // пин ленты
-#define LED_TYPE WS2812 // чbп ленты
+#define LED_TYPE WS2812 // чип ленты
 #define LED_MAX 500     // макс. светодиодов
 
 // имя точки в режиме AP
 #define GT_AP_SSID "GyverTwink"
 #define GT_AP_PASS "12345678"
-#define DEBUG_SERIAL_GT   // раскомментируй, чтобы включить отладку
+//#define DEBUG_SERIAL_GT   // раскомментируй, чтобы включить отладку
 
 // ================== LIBS ==================
 #include <ESP8266WiFi.h>
@@ -51,6 +51,8 @@ struct Cfg {
   bool autoCh = 0;
   bool rndCh = 0;
   byte prdCh = 1;
+  bool turnOff = 0;
+  byte offTmr = 60;
 };
 Cfg cfg;
 EEManager EEcfg(cfg);
@@ -81,6 +83,7 @@ EEManager EEeff(effs);
 // ================== MISC DATA ==================
 Timer forceTmr(30000, false);
 Timer switchTmr(0, false);
+Timer offTmr(60000, false);
 bool calibF = false;
 byte curEff = 0;
 byte forceEff = 0;
@@ -103,22 +106,22 @@ void setup() {
   EEPROM.begin(2048); // с запасом!
 
   // если это первый запуск или щелчок по кнопке, открываем портал
-  if (EEwifi.begin(0, 'b') || checkButton()) portalRoutine();
+  if (EEwifi.begin(0, 'a') || checkButton()) portalRoutine();
 
   // создаём точку или подключаемся к AP
-  if (portalCfg.mode == WIFI_AP || portalCfg.SSID[0] == '\0') setupAP();
+  if (portalCfg.mode == WIFI_AP || (portalCfg.mode == WIFI_STA && portalCfg.SSID[0] == '\0')) setupAP();
   else setupSTA();
   DEBUGLN(myIP);
 
-  EEcfg.begin(EEwifi.nextAddr(), 'b');
-  EEeff.begin(EEcfg.nextAddr(), 'b');
-  EEmm.begin(EEeff.nextAddr(), 'b');
-  EExy.begin(EEmm.nextAddr(), 'b');
+  EEcfg.begin(EEwifi.nextAddr(), 'a');
+  EEeff.begin(EEcfg.nextAddr(), 'a');
+  EEmm.begin(EEeff.nextAddr(), 'a');
+  EExy.begin(EEmm.nextAddr(), 'a');
 
   switchTmr.setPrd(cfg.prdCh * 60000ul);
   if (cfg.autoCh) switchTmr.restart();
   switchEff();
-  
+  cfg.turnOff = false;
   strip->setLeds(leds, cfg.ledAm);
   udp.begin(8888);
 }
@@ -126,11 +129,11 @@ void setup() {
 // ================== LOOP ==================
 void loop() {
   button();   // опрос кнопки
-  
+
   // менеджер епром
   EEcfg.tick();
   EEeff.tick();
-  
+
   parsing();  // парсим udp
 
   // таймер принудительного показа эффектов
@@ -138,10 +141,19 @@ void loop() {
     forceTmr.stop();
     switchEff();
   }
-  
+
   // форс выключен и настало время менять эффект
   if (!forceTmr.state() && switchTmr.ready()) switchEff();
 
+  // таймер выключения
+  if (offTmr.ready()) {
+    offTmr.stop();
+    cfg.turnOff = false;
+    cfg.power = false;
+    strip->showLeds(0);
+    EEcfg.update();
+  }
+
   // показываем эффект, если включены
-  if (!calibF && cfg.power) effects();  
+  if (!calibF && cfg.power) effects();
 }

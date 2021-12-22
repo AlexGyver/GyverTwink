@@ -43,7 +43,9 @@ void parsing() {
         answ[5] = cfg.autoCh;
         answ[6] = cfg.rndCh;
         answ[7] = cfg.prdCh;
-        reply(answ, 8);
+        answ[8] = cfg.turnOff;
+        answ[9] = cfg.offTmr;
+        reply(answ, 10);
         break;
 
       case 2:   // приём настроек
@@ -70,6 +72,16 @@ void parsing() {
             switchEff();
             if (cfg.autoCh) switchTmr.restart();
             return;
+            break;
+          case 7:
+            cfg.turnOff = ubuf[4];
+            if (cfg.turnOff) offTmr.restart();
+            else offTmr.stop();
+            break;
+          case 8:
+            cfg.offTmr = ubuf[4];
+            offTmr.setPrd(cfg.offTmr * 60000ul);
+            if (cfg.turnOff) offTmr.restart();
             break;
         }
         if (!cfg.power) strip->showLeds(0);

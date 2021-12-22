@@ -19,15 +19,19 @@
 
 // ============== НАСТРОЙКИ ===============
 // true - Android режим, false - PC режим
-private static final boolean androidMode = false;
+private static final boolean androidMode = true;
 
 // для PC режима раскомментируй две строки ниже. Для Android - закомментируй
-void openKeyboard() {}
-void closeKeyboard() {}
+//void openKeyboard() {}
+//void closeKeyboard() {}
+
+// чтобы сбилдить под Android - нужно установить Android mode
+// встроенный билдер собирает под SDK версии 29
+// я собирал проект в Android Studio под target 32 версии
 
 /// масштаб интерфейса
-float androidScale = 3.0;
-float pcScale = 1.5;
+float androidScale = 2.8;
+float pcScale = 1.3;
 
 // ============== ЛИБЫ ===============
 import processing.video.*;
@@ -62,7 +66,7 @@ StringList ips = new StringList();
 boolean calibF = false;
 int calibCount = 0;
 int WW, W;
-int offs = 20;
+int offs = 30;
 String[] file;
 // ============== ПРОГРАММА ===============
 void settings() {

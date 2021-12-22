@@ -4,13 +4,16 @@ TextInput subnet = new TextInput();
 DropDown dropIP = new DropDown();
 DropDown dropEff = new DropDown();
 Toggle power = new Toggle();
+Toggle offT = new Toggle();
 Toggle auto = new Toggle();
 Toggle rnd = new Toggle();
 Slider bri = new Slider();
 Slider prd = new Slider();
+Slider offS = new Slider();
 Toggle fav = new Toggle();
 Slider scl = new Slider();
 Slider spd = new Slider();
+
 String[] effs = {
   "0. Party_grad", 
   "1. Raibow_grad", 
@@ -54,7 +57,7 @@ void ui() {
 
 void cfgTab() {
   uiGlobalX(offs);
-  uiResetStep(50);
+  uiResetStep(20);
   LabelCenter("GyverTwink", 20);
   Divider(width-offs*2);
 
@@ -62,6 +65,9 @@ void cfgTab() {
   Label("Connection:", 15);
   Label("Power:", 15);
   Label("Brightness:", 15);
+  Divider(width-offs*2);
+  Label("Off timer:", 15);
+  Label("Turn off in [1-240m]:", 15);
   Divider(width-offs*2);
   Label("Switch effect:", 15);
   Label("Auto:", 15);
@@ -72,13 +78,16 @@ void cfgTab() {
   Label("LED amount:", 15);
   Label("Subnet:", 15);
 
-  uiResetStep(50);
+  uiResetStep(30);
   uiStep();
   uiStep();
   uiStep();
 
   if (power.show(WW, uiStep())) sendData(2, 1, int(power.value));
   if (bri.show(0, 255, WW, uiStep(), W)) sendData(2, 2, int(bri.value));
+  uiStep();
+  if (offT.show(WW, uiStep())) sendData(2, 7, int(offT.value));
+  if (offS.show(0, 250, WW, uiStep(), W)) sendData(2, 8, int(offS.value));
   uiStep();
   if (Button("Next effect", WW, uiStep(), W)) sendData(2, 6);
   if (auto.show(WW, uiStep())) sendData(2, 3, int(auto.value));
@@ -99,7 +108,7 @@ void cfgTab() {
     saveStrings("subnet.txt", file);
   }
 
-  uiResetStep(50);
+  uiResetStep(30);
   uiStep();
   uiStep();
   if (dropIP.show(ips.array(), WW, uiStep(), W-s_height)) {

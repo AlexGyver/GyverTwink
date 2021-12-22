@@ -23,6 +23,8 @@ void receive(byte[] ubuf) {
     auto.value = boolean(data[5]);
     rnd.value = boolean(data[6]);
     prd.value = data[7];
+    offT.value = boolean(data[8]);
+    offS.value = data[9];
     break;
 
   case 4:

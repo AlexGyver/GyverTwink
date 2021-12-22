@@ -12,7 +12,9 @@ void keyPressed() {
 /*---------------------------------------
  UI Components of Cards_UI for Processing
  author: Lucas Cassiano - cassiano@mit.edu
+ 
  version: 2.0 by AlexGyver
+ мне не нравится - потом сделаю свою либу 
  */
 // Function list (2.0): https://github.com/GyverLibs/cards_ui
 // Old demo: https://web.media.mit.edu/~cassiano/projects/cards_ui/
