@@ -14,9 +14,11 @@
   Мигнул розовым - создал точку
 */
 
+// ================ НАСТРОЙКИ ================
 #define BTN_PIN D3      // пин кнопки
 #define LED_PIN D1      // пин ленты
 #define LED_TYPE WS2812 // чип ленты
+#define LED_ORDER GRB   // порядок цветов ленты
 #define LED_MAX 500     // макс. светодиодов
 
 // имя точки в режиме AP
@@ -115,8 +117,8 @@ void setup() {
 
   EEcfg.begin(EEwifi.nextAddr(), 'a');
   EEeff.begin(EEcfg.nextAddr(), 'a');
-  EEmm.begin(EEeff.nextAddr(), 'a');
-  EExy.begin(EEmm.nextAddr(), 'a');
+  EEmm.begin(EEeff.nextAddr(), (uint8_t)LED_MAX);
+  EExy.begin(EEmm.nextAddr(), (uint8_t)LED_MAX);
 
   switchTmr.setPrd(cfg.prdCh * 60000ul);
   if (cfg.autoCh) switchTmr.restart();

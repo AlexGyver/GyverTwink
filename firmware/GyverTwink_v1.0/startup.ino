@@ -14,7 +14,7 @@ void portalRoutine() {
 }
 
 void startStrip() {
-  strip = &FastLED.addLeds<LED_TYPE, LED_PIN, GRB>(leds, LED_MAX).setCorrection(TypicalLEDStrip);
+  strip = &FastLED.addLeds<LED_TYPE, LED_PIN, LED_ORDER>(leds, LED_MAX).setCorrection(TypicalLEDStrip);
   strip->setLeds(leds, LED_MAX);
   strip->clearLedData();
   // выводим ргб
