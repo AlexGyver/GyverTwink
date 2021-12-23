@@ -19,11 +19,11 @@
 
 // ============== НАСТРОЙКИ ===============
 // true - Android режим, false - PC режим
-private static final boolean androidMode = true;
+private static final boolean androidMode = false;
 
 // для PC режима раскомментируй две строки ниже. Для Android - закомментируй
-//void openKeyboard() {}
-//void closeKeyboard() {}
+void openKeyboard() {}
+void closeKeyboard() {}
 
 // чтобы сбилдить под Android - нужно установить Android mode
 // встроенный билдер собирает под SDK версии 29

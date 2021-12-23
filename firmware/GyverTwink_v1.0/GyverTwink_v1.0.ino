@@ -152,6 +152,7 @@ void loop() {
     cfg.power = false;
     strip->showLeds(0);
     EEcfg.update();
+    DEBUGLN("Off tmr");
   }
 
   // показываем эффект, если включены
