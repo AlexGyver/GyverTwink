@@ -15,5 +15,4 @@
 3) **schemes** - схемы
 
 ## Приложение
-Для Android можно скачать с [Google Play](https://play.google.com/store/apps/details?id=ru.alexgyver.GyverTwink), \
-а также с релизов (кнопочка справа).
+Для Android можно скачать с [Google Play](https://play.google.com/store/apps/details?id=ru.alexgyver.GyverTwink), а также с релизов (кнопочка справа).
