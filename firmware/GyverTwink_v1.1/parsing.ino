@@ -98,14 +98,16 @@ void parsing() {
             break;
 
           case 1:   // следующий лед
-            int curLed = ubuf[4] * 100 + ubuf[5];
-            if (curLed > 0) {
-              xy[curLed - 1][0] = ubuf[6];
-              xy[curLed - 1][1] = ubuf[7];
+            {
+              int curLed = ubuf[4] * 100 + ubuf[5];
+              if (curLed > 0) {
+                xy[curLed - 1][0] = ubuf[6];
+                xy[curLed - 1][1] = ubuf[7];
+              }
+              strip->clearLedData();
+              leds[ubuf[4]] = CRGB::White;
+              strip->showLeds(200);
             }
-            strip->clearLedData();
-            leds[ubuf[4]] = CRGB::White;
-            strip->showLeds(200);
             break;
 
           case 2:   // калибровка окончена

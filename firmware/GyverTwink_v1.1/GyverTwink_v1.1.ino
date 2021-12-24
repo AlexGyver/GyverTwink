@@ -18,6 +18,8 @@
 
 // ================ НАСТРОЙКИ ================
 #define BTN_PIN D3      // пин кнопки
+#define BTN_TOUCH 0     // 1 - сенсорная кнопка, 0 - нет
+
 #define LED_PIN D1      // пин ленты
 #define LED_TYPE WS2812 // чип ленты
 #define LED_ORDER GRB   // порядок цветов ленты
@@ -106,6 +108,8 @@ void setup() {
   Serial.begin(115200);
   DEBUGLN();
 #endif
+  delay(200);
+  if (BTN_TOUCH) btn.setButtonLevel(HIGH);
   startStrip();
   EEPROM.begin(2048); // с запасом!
 

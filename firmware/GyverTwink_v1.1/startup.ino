@@ -27,7 +27,8 @@ void startStrip() {
 bool checkButton() {
   uint32_t tmr = millis();
   while (millis() - tmr < 2000) {
-    if (!digitalRead(BTN_PIN)) return true;
+    btn.tick();
+    if (btn.state()) return true;
   }
   return false;
 }
