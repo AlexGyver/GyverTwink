@@ -1,9 +1,3 @@
-// Исходник приложения GyverTwink
-// Написано на коленке, возможно позже переделаю =(
-// v1.0 beta
-// v1.1 release
-// v1.2 - калибровка больше 255, автоматический масштаб интерфейса, поля ввода подвинул наверх, оптимизация от TheAirBlow 
-
 // ============== ВАЖНО! ===============
 // Установить библиотеки из менеджера библиотек:
 // (Набросок/Импортировать библиотеку/Добавить библиотеку)
@@ -32,7 +26,7 @@ void closeKeyboard() {}
 // я собирал проект в Android Studio под target 32 версии
 
 // масштаб интерфейса
-float androidScale/* = 2.8*/;
+float androidScale = 2.8;
 float pcScale = 1.3;
 
 // ============== LIBRARIES ===============
@@ -73,8 +67,6 @@ void settings() {
 }
 
 void setup() {
-  androidScale = width/400.0;
-  offs = width / 25;
   if (androidMode) W = width/2;
   else W = 300;      
   WW = width-W-offs;
@@ -113,11 +105,11 @@ void draw() {
       if (calibCount == 0) makeMap(0);
       if (calibCount > int(leds.text)) {
         calibF = false;
-        sendData(new int[] {3, 2, calibCount/100, calibCount%100, maxX, maxY});
+        sendData(new int[] {3, 2, calibCount, maxX, maxY});
         calibCount = 0;
         return;
       }
-      sendData(new int[] {3, 1, calibCount/100, calibCount%100, maxX, maxY});
+      sendData(new int[] {3, 1, calibCount, maxX, maxY});
       calibCount++;
     }
   }

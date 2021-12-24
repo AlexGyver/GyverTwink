@@ -60,38 +60,34 @@ void cfgTab() {
   uiResetStep(20);
   LabelCenter("GyverTwink", 20);
   Divider(width-offs*2);
-
   Label("Connection:", 15);
-  Label("Subnet:", 15);   
-  if (found) { 
-    Divider(width-offs*2);
-    Label("LED amount:", 15);
+  
+  if (found) {
     Label("Power:", 15);
     Label("Brightness:", 15);
     Divider(width-offs*2);
     Label("Off timer:", 15);
-    Label("Turn off in [1-240m]:", 15);
+    Label("Turn off in (" + int(offS.value) + "m):", 15);
     Divider(width-offs*2);
     Label("Switch effect:", 15);
     Label("Auto:", 15);
     Label("Random:", 15);
-    Label("Period [1-10m]:", 15);
+    Label("Period (" + int(prd.value) + "m):", 15);
+    Divider(width-offs*2);
+    Label("LED amount:", 15);
+    Label("Subnet:", 15);
+  } else {
+    Divider(width-offs*2);
+    Label("Subnet:", 15);
   }
 
-  uiResetStep(20);
+  if (found) uiResetStep(30);
+  else uiResetStep(70);
+  uiStep();
   uiStep();
   uiStep();
 
   if (found) { 
-    uiStep();
-    uiStep();
-    uiStep();
-    if (leds.show(WW, uiStep(), W) && androidMode) openKeyboard();
-    if (leds.done()) {
-      if (androidMode) closeKeyboard();
-      int am = int(leds.text);
-      sendData(new int[] {2, 0, am/100, am % 100});
-    }
     if (power.show(WW, uiStep())) sendData(new int[] {2, 1, int(power.value)});
     if (bri.show(0, 255, WW, uiStep(), W)) sendData(new int[] {2, 2, int(bri.value)});
     uiStep();
@@ -102,17 +98,26 @@ void cfgTab() {
     if (auto.show(WW, uiStep())) sendData(new int[] {2, 3, int(auto.value)});
     if (rnd.show(WW, uiStep())) sendData(new int[] {2, 4, int(rnd.value)});
     if (prd.show(1, 10, WW, uiStep(), W)) sendData(new int[] {2, 5, int(prd.value)});
-  }
 
-  uiResetStep(20);
-  uiStep();
-  uiStep();
+    uiStep();
+    if (leds.show(WW, uiStep(), W) && androidMode) openKeyboard();
+    if (leds.done()) {
+      if (androidMode) closeKeyboard();
+      int am = int(leds.text);
+      sendData(new int[] {2, 0, am/100, am % 100});
+    }
+  }
+  
   if (subnet.show(WW, uiStep(), W) && androidMode) openKeyboard();
   if (subnet.done()) {
     if (androidMode) closeKeyboard();
     file[0] = subnet.text;
     saveStrings("subnet.txt", file);
   }
+
+  uiResetStep(30);
+  uiStep();
+  uiStep();
   if (dropIP.show(ips.array(), WW, uiStep(), W-s_height)) {
     curIP = ips.get(dropIP.getSelected());
     requestCfg();
@@ -154,7 +159,7 @@ void calibTab() {
     uiResetStep(frame.height + 30);
     uiResetX(0);
     uiGlobalX(0);
-
+    
     // Камера не стартовала в PC режиме
     if (!androidMode && Wcam == null) return;
     if (camReady) {
@@ -162,16 +167,10 @@ void calibTab() {
       readCam();
       makeMap(1);
       findMax();
-    }    
-
-    PImage frameScaled = frame.copy();
-    frameScaled.resize(0, height*4/5);
-    image(frameScaled, (width-frameScaled.width)/2, 0);
-    if (calibF) {
-      frameScaled = ring.copy();
-      frameScaled.resize(0, height*4/5);
-      image(frameScaled, (width-frameScaled.width)/2, 0);
     }
+
+    image(frame, (width-frame.width)/2, 0);
+    if (calibF) image(ring, (width-frame.width)/2, 0);
 
     if (Button("Start")) {
       calibF = true;
@@ -179,7 +178,7 @@ void calibTab() {
       calibCount = 0;
       actionTmr = millis() + 2000;
     }
-
+    
     Label(str(calibCount*100/(int(leds.text)+1))+'%', 15, uiPrevX()+15, uiPrevStep());
     if (Button("Stop")) {
       calibF = false;
