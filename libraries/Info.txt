@@ -1,0 +1,1 @@
+Закинуть в C:\Users\ИмяПользователя\Documents\Arduino\libraries
