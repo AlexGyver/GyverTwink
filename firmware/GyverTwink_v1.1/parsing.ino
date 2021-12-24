@@ -98,9 +98,10 @@ void parsing() {
             break;
 
           case 1:   // следующий лед
-            if (ubuf[4] > 0) {
-              xy[ubuf[4] - 1][0] = ubuf[5];
-              xy[ubuf[4] - 1][1] = ubuf[6];
+            int curLed = ubuf[4] * 100 + ubuf[5];
+            if (curLed > 0) {
+              xy[curLed - 1][0] = ubuf[6];
+              xy[curLed - 1][1] = ubuf[7];
             }
             strip->clearLedData();
             leds[ubuf[4]] = CRGB::White;
