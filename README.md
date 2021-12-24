@@ -9,10 +9,10 @@
 ## Папки
 1) **docs** - всякая инфа, документы, протокол связи
 2) **src** - там весь исходный код
-  * **firmware** - прошивка для esp8266
-  * **libraries** - библиотеки для esp8266
-  * **processing** - исходник приложения
-  * **schemes** - схемы
+	* **firmware** - прошивка для esp8266
+	* **libraries** - библиотеки для esp8266
+	* **processing** - исходник приложения
+3) **schemes** - схемы
 
 ## Приложение
 Для Android можно скачать с [Google Play](https://play.google.com/store/apps/details?id=ru.alexgyver.GyverTwink), \
