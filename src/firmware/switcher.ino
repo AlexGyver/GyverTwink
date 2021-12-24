@@ -1,4 +1,7 @@
-void switchEff() {
+/***
+ * Переключить эффект (авто-режим)
+ */
+void switchEffect() {
   // поиск favorite эффектов
   while (true) {
     if (cfg.rndCh) curEff = random(0, ACTIVE_PALETTES * 2);
@@ -7,6 +10,6 @@ void switchEff() {
     }
     if (effs[curEff].fav) break;
   }
-  DEBUG("switch to: ");
+  DEBUG("[AutoMode] Switching effect to ");
   DEBUGLN(curEff);
 }

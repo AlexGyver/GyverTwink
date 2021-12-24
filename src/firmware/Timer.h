@@ -1,5 +1,8 @@
-// класс таймера
 #pragma once
+
+/***
+ * Класс таймера
+ */
 struct Timer {
   Timer (uint32_t prd, boolean state = true) {
     setPrd(prd);

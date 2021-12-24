@@ -1,21 +1,24 @@
-void button() {
+/***
+ * Обработчик кнопки
+ */
+void handleButton() {
   static bool dir = 1;
 
   btn.tick();
   if (btn.hasClicks(1)) {
-    DEBUGLN("1x click - power");
+    DEBUGLN("[Button] Power on/off LEDs");
     cfg.power = !cfg.power;
     if (!cfg.power) strip->showLeds(0);
     EEcfg.update();
   }
   
   if (btn.hasClicks(2)) {
-    DEBUGLN("2x click - next");
-    switchEff();
+    DEBUGLN("[Button] Switching effect");
+    switchEffect();
   }
   
   if (btn.step()) {
-    DEBUGLN("change bright");
+    DEBUGLN("[Button] Change brightness");
     if (cfg.power) {
       // меняем безопасно
       int bri = cfg.bright;
@@ -32,7 +35,7 @@ void button() {
   }
   
   if (btn.releaseStep()) {
-    DEBUGLN("change dir");
+    DEBUGLN("[Button] Changing direction");
     dir = !dir;
   }
 }

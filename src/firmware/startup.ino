@@ -1,29 +1,39 @@
-void portalRoutine() {
-  // запускаем portal
+/***
+ * Запустить SimplePortal
+ */
+void configMode() {
+  // Запускаем SimplePortal
   portalStart();
-  DEBUGLN("Portal start");
+  DEBUGLN("[SimplePortal] Portal started");
 
-  // ждём действий пользователя, мигаем
+  // Ждём действий пользователя, мигаем
   while (!portalTick()) fader(CRGB::Blue);
 
-  // если это 1 connect, 2 ap, 3 local, обновляем данные в епр
+  // Режимы: 1 - Router, 2 - Access Point, 3 - Local
+  // Если статус один из них, меняем режим
   if (portalStatus() <= 3) EEwifi.updateNow();
 
-  DEBUG("Portal status: ");
+  DEBUG("[SimplePortal] Portal status: ");
   DEBUGLN(portalStatus());
 }
 
-void startStrip() {
+/***
+ * Запустить ленту
+ */
+void startLEDs() {
   strip = &FastLED.addLeds<LED_TYPE, LED_PIN, LED_ORDER>(leds, LED_MAX).setCorrection(TypicalLEDStrip);
   strip->setLeds(leds, LED_MAX);
   strip->clearLedData();
-  // выводим ргб
+  // Выводим RGB во время загрузки
   leds[0] = CRGB::Red;
   leds[1] = CRGB::Green;
   leds[2] = CRGB::Blue;
   strip->showLeds(50);
 }
 
+/***
+ * Значение кнопки (true/false)
+ */
 bool checkButton() {
   uint32_t tmr = millis();
   while (millis() - tmr < 2000) {
@@ -32,18 +42,25 @@ bool checkButton() {
   return false;
 }
 
-void setupAP() {
-  DEBUG("AP Mode");
+/***
+ * Режим Access Point
+ */
+void accessPoint() {
+  DEBUG("[AP] Access Point mode");
   WiFi.disconnect();
   WiFi.mode(WIFI_AP);
   WiFi.softAP(GT_AP_SSID, GT_AP_PASS);
   myIP = WiFi.softAPIP();
   server.begin();
   fadeBlink(CRGB::Magenta);
+  DEBUG("[AP] Done!");
 }
 
-void setupSTA() {
-  DEBUG("Connecting to AP... ");
+/***
+ * Подключение к роутеру
+ */
+void routerMode() {
+  DEBUG("[STA] Router connection mode");
   WiFi.softAPdisconnect();
   WiFi.disconnect();
   WiFi.mode(WIFI_STA);
@@ -53,7 +70,7 @@ void setupSTA() {
   while (millis() - tmr < 15000) {
     if (WiFi.status() == WL_CONNECTED) {
       fadeBlink(CRGB::Green);
-      DEBUGLN("ok");
+      DEBUGLN("[STA] Connected successfully!");
       myIP = WiFi.localIP();
       return;
     }
@@ -61,6 +78,6 @@ void setupSTA() {
     yield();
   }
   fadeBlink(CRGB::Red);
-  DEBUGLN("fail");
-  setupAP();
+  DEBUGLN("[STA] Failed to connect, fallback to AP mode!");
+  accessPoint();
 }

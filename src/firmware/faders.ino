@@ -1,3 +1,6 @@
+/***
+ * Градиент
+ */
 void fader(CRGB color) {
   static uint32_t tmr;
   static int val = 0;
@@ -11,6 +14,9 @@ void fader(CRGB color) {
   }
 }
 
+/***
+ * Мигаем
+ */
 void fadeBlink(CRGB color) {
   for (int i = 0; i < 200; i += 20) {
     strip->showColor(color, i);

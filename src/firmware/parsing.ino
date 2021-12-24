@@ -1,6 +1,9 @@
 #define MAX_UDP_PACKET 30
-byte ubuf[MAX_UDP_PACKET];
+byte ubuf[MAX_UDP_PACKET]; // Буфер пакета
 
+/***
+ * Отослать ответ
+ */
 void reply(byte* data, byte size) {
   udp.beginPacket(udp.remoteIP(), udp.remotePort());
   udp.write("GT");
@@ -8,33 +11,34 @@ void reply(byte* data, byte size) {
   udp.endPacket();
 }
 
-void parsing() {
+/***
+ * Парсер пакетов
+ */
+void parseUDP() {
   static uint32_t tmr;
   if (udp.parsePacket()) {
-    if (millis() - tmr < 50) {  // "антидребезг" приёма
+    // Цыганские фокусы
+    if (millis() - tmr < 50) {
       udp.read(ubuf, MAX_UDP_PACKET);
       return;
     }
     tmr = millis();
     int n = udp.read(ubuf, MAX_UDP_PACKET);
     ubuf[n] = 0;
+    // В начале всегда должно быть GT
     if (ubuf[0] != 'G' || ubuf[1] != 'T') return;
-    /*for (int i = 2; i < n; i++) {
-      DEBUG(ubuf[i]);
-      DEBUG(',');
-      }
-      DEBUGLN();*/
+    // Буффер ответа
     byte answ[10];
 
     switch (ubuf[2]) {
-      case 0:   // запрос IP
+      case 0: // Запрос IP
         delay(myIP[3] * 2);
         answ[0] = 0;
         answ[1] = myIP[3];
         reply(answ, 2);
         break;
 
-      case 1:   // запрос настроек
+      case 1: // Запрос настроек
         answ[0] = 1;
         answ[1] = cfg.ledAm / 100;
         answ[2] = cfg.ledAm % 100;
@@ -48,37 +52,42 @@ void parsing() {
         reply(answ, 10);
         break;
 
-      case 2:   // приём настроек
+      case 2: // Приём настроек
         forceTmr.stop();
         switch (ubuf[3]) {
-          case 0: cfg.ledAm = ubuf[4] * 100 + ubuf[5];
+          case 0: // Изменить количество LEDs
+            cfg.ledAm = ubuf[4] * 100 + ubuf[5];
             strip->setLeds(leds, cfg.ledAm);
             break;
-          case 1: cfg.power = ubuf[4];
+          case 1: // Включить/выключить ленту
+            cfg.power = ubuf[4];
             break;
-          case 2: cfg.bright = ubuf[4];
+          case 2: // Изменить яркость
+            cfg.bright = ubuf[4];
             break;
-          case 3: cfg.autoCh = ubuf[4];
+          case 3: // Включить/выключить автоматическую смену эффекта
+            cfg.autoCh = ubuf[4];
             if (cfg.autoCh) switchTmr.restart();
             else switchTmr.stop();
             break;
-          case 4: cfg.rndCh = ubuf[4];
+          case 4: // Включить/выключить случайные эффекты
+            cfg.rndCh = ubuf[4];
             break;
-          case 5: cfg.prdCh = ubuf[4];
+          case 5: // Смена времени таймера автоматической смены эффекта
+            cfg.prdCh = ubuf[4];
             switchTmr.setPrd(cfg.prdCh * 60000ul);
             if (cfg.autoCh) switchTmr.restart();
             break;
-          case 6:   // нехт эффект
-            switchEff();
+          case 6: // Следующий эффект
+            switchEffect();
             if (cfg.autoCh) switchTmr.restart();
-            return;
             break;
-          case 7:
+          case 7: // Таймер автоматического выключения
             cfg.turnOff = ubuf[4];
             if (cfg.turnOff) offTmr.restart();
             else offTmr.stop();
             break;
-          case 8:
+          case 8: // Изменить время таймера автоматического выключения
             cfg.offTmr = ubuf[4];
             offTmr.setPrd(cfg.offTmr * 60000ul);
             if (cfg.turnOff) offTmr.restart();
@@ -88,16 +97,16 @@ void parsing() {
         EEcfg.update();
         break;
 
-      case 3:
+      case 3: // Калибровка
         switch (ubuf[3]) {
-          case 0:   // запуск калибровки
-            DEBUGLN("Calibration start");
+          case 0: // запуск калибровки
+            DEBUGLN("[Calibrate] Started!");
             calibF = true;
             strip->clearLedData();
             strip->showLeds(0);
             break;
 
-          case 1:   // следующий лед
+          case 1: // следующий лед
             if (ubuf[4] > 0) {
               xy[ubuf[4] - 1][0] = ubuf[5];
               xy[ubuf[4] - 1][1] = ubuf[6];
@@ -107,8 +116,8 @@ void parsing() {
             strip->showLeds(200);
             break;
 
-          case 2:   // калибровка окончена
-            DEBUGLN("Finished");
+          case 2: // калибровка окончена
+            DEBUGLN("[Calibrate] Finished!");
             calibF = false;
             strip->clearLedData();
             strip->showLeds(0);
@@ -131,11 +140,11 @@ void parsing() {
         }
         break;
 
-      case 4:   // управление эффектами
+      case 4: // Управление эффектами
         forceTmr.restart();
         EEeff.update();
         switch (ubuf[3]) {
-          case 0:   // выбор эффекта в дропе
+          case 0: // Изменить эффект
             forceEff = ubuf[4];
             answ[0] = 4;
             answ[1] = effs[forceEff].fav;
@@ -143,13 +152,13 @@ void parsing() {
             answ[3] = effs[forceEff].speed;
             reply(answ, 4);
             break;
-          case 1:   // флажок избранное
+          case 1: // Изменить флажок "любимый" у текущего эффекта
             effs[forceEff].fav = ubuf[4];
             break;
-          case 2:   // масштаб
+          case 2: // Изменить масштаб у текущего эффекта
             effs[forceEff].scale = ubuf[4];
             break;
-          case 3:   // скорость
+          case 3: // Изменить скорость у текущего эффекта
             effs[forceEff].speed = ubuf[4];
             break;
         }
