@@ -1,3 +1,4 @@
+
 void initCam() {
   if (androidMode) {
     Acam = new KetaiCamera(this, 1280, 720, 30);
