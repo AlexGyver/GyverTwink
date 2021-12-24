@@ -151,18 +151,15 @@ void effTab() {
 
 void calibTab() { 
   if (found) {
-    uiResetStep(frame.height + 30);
-    uiResetX(0);
-    uiGlobalX(0);
-
     // Камера не стартовала в PC режиме
     if (!androidMode && Wcam == null) return;
+
     if (camReady) {
       camReady = false;
       readCam();
       makeMap(1);
       findMax();
-    }    
+    }
 
     PImage frameScaled = frame.copy();
     frameScaled.resize(0, height*4/5);
@@ -172,6 +169,10 @@ void calibTab() {
       frameScaled.resize(0, height*4/5);
       image(frameScaled, (width-frameScaled.width)/2, 0);
     }
+
+    uiResetStep(height - width/6 - 2*_step_y);
+    uiResetX(0);
+    uiGlobalX(0);
 
     if (Button("Start")) {
       calibF = true;

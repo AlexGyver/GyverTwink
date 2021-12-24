@@ -957,7 +957,7 @@ public class DropDown {
     int h = s_height;
     w -= h;
     _drop_open = false;
-    if (Button(args[selected], x, y, w, h) || Button("", x+w, y, h, h)) open = !open;    
+    if (Button(args[selected], x, y, w, h) || Button("", x+w, y, h, h)) open = !open;
     noStroke();
     if (!open) {
       triangle(x+w+h/4+1, y+0.28*h+1, x+w+h*3/4+1, y+0.28*h+1, x+w+h/2+1, y+0.71*h+1);

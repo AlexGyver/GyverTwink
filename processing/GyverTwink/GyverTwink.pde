@@ -3,6 +3,7 @@
 // v1.0 beta
 // v1.1 release
 // v1.2 - калибровка больше 255, автоматический масштаб интерфейса, поля ввода подвинул наверх, оптимизация от TheAirBlow 
+// v1.3 - опять фиксы масштаба
 
 // ============== ВАЖНО! ===============
 // Установить библиотеки из менеджера библиотек:
@@ -97,12 +98,14 @@ void setup() {
 }
 
 void draw() {
-  // Поиск устройств блокирует отрисовку интерфейса по таймеру
   if (searchF) {
     if (millis() - actionTmr > 800) {
       searchF = false;
-      if (ips.size() == 0) ips.append("<undetected>");
-      else requestCfg();
+      if (ips.size() == 0) ips.append("not found");
+      else {
+        found = true;
+        requestCfg();
+      }
     }
   } else ui();
 

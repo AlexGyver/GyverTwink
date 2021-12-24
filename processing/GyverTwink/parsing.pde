@@ -8,10 +8,7 @@ void receive(byte[] ubuf) {
   switch (data[0]) {
     case 0: // Поиск
       String ip = brIP.substring(0, brIP.lastIndexOf('.')+1) + str(data[1]);
-      if (!ips.hasValue(ip)) {
-        ips.append(ip);
-        found = true;
-      }
+      if (!ips.hasValue(ip)) ips.append(ip);
       break;
 
     case 1: // Настройки 
