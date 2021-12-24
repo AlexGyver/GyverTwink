@@ -1,0 +1,9 @@
+[submodule "src/libraries/SimplePortal"]
+	path = src/libraries/SimplePortal
+	url = https://github.com/GyverLibs/SimplePortal
+[submodule "src/libraries/EEManager"]
+	path = src/libraries/EEManager
+	url = https://github.com/GyverLibs/EEManager
+[submodule "src/libraries/EncButton"]
+	path = src/libraries/EncButton
+	url = https://github.com/GyverLibs/EncButton

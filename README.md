@@ -1,13 +1,19 @@
 # GyverTwink
-Гирлянда на адресных светодидоах и esp8266, управление по WiFi
+Гирлянда на адресных светодидоах и esp8266, управление по WiFi.
+
+## Информация про форк
+1) Используются релизы \
+2) Чето там натыкал \
+3) Я хз что сделал
 
 ## Папки
-- **docs** - всякая инфа, документы, протокол связи
-- **firmware** - прошивка для esp8266
-- **libraries** - библиотеки для esp8266
-- **processing** - исходник приложения
-- **schemes** - схемы
+1) **docs** - всякая инфа, документы, протокол связи
+2) **src** - там весь исходный код
+  * **firmware** - прошивка для esp8266
+  * **libraries** - библиотеки для esp8266
+  * **processing** - исходник приложения
+  * **schemes** - схемы
 
 ## Приложение
-- **Windows** - [релиз]() (~300мб)
-- **Android** - [Google Play](https://play.google.com/store/apps/details?id=ru.alexgyver.GyverTwink), [.apk]()
+Для Android можно скачать с [Google Play](https://play.google.com/store/apps/details?id=ru.alexgyver.GyverTwink), \
+а также с релизов (кнопочка справа).
