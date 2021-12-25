@@ -1,0 +1,12 @@
+[submodule "libraries/EEManager"]
+	path = libraries/EEManager
+	url = https://github.com/GyverLibs/EEManager
+[submodule "libraries/EncButton"]
+	path = libraries/EncButton
+	url = https://github.com/GyverLibs/EncButton
+[submodule "libraries/SimplePortal"]
+	path = libraries/SimplePortal
+	url = https://github.com/GyverLibs/SimplePortal
+[submodule "libraries/FastLED"]
+	path = libraries/FastLED
+	url = https://github.com/FastLED/FastLED

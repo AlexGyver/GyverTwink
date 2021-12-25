@@ -12,7 +12,7 @@ struct Timer {
   }
 
   bool ready() {
-    if (_state && millis() - _tmr >= _prd) {
+    if (_state && millis() - _Timer >= _prd) {
       restart();
       return true;
     }
@@ -20,7 +20,7 @@ struct Timer {
   }
 
   void restart() {
-    _tmr = millis();
+    _Timer = millis();
     _state = true;
   }
 
@@ -32,6 +32,6 @@ struct Timer {
     return _state;
   }
 
-  uint32_t _tmr, _prd;
+  uint32_t _Timer, _prd;
   bool _state = true;
 };

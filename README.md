@@ -1,14 +1,5 @@
 # GyverTwink
-Гирлянда на адресных светодидоах и esp8266, управление по WiFi
-
-## Обновления
-### Прошивка
-- 1.1 – исправлена калибровка больше 255 светодиодов
-- 1.2 – исправлена ошибка с калибровкой
-
-### Приложение
-- 1.2 – калибровка больше 255, автоматический масштаб интерфейса, поля ввода подвинул наверх, оптимизация от TheAirBlow
-- 1.7 – починил связь с гирляндой ВСЁ РАБОТАЕТ
+Гирлянда на адресных светодидоах и [ESP8266](https://ru.wikipedia.org/wiki/ESP8266), управление по WiFi
 
 ## Папки
 - **docs** - всякая инфа, документы, протокол связи
@@ -19,3 +10,4 @@
 
 ## Приложение
 - **Android** - [Google Play](https://play.google.com/store/apps/details?id=ru.alexgyver.GyverTwink), [.apk](https://github.com/AlexGyver/GyverTwink/raw/main/Android/gyvertwink.apk)
+- **Windows**/**Linux** - [Releases](https://github.com/TheAirBlow/GyverTwink/releases)

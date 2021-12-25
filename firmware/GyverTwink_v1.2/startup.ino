@@ -1,12 +1,11 @@
-void portalRoutine() {
-  // запускаем portal
-  portalStart();
-  DEBUGLN("Portal start");
+void setupNetwork() {
+  portalStart(); // Стартуем SimplePortal
+  DEBUGLN("[Setup] SimplePortal started!");
 
-  // ждём действий пользователя, мигаем
+  // Ждём действий пользователя, мигаем
   while (!portalTick()) fader(CRGB::Blue);
 
-  // если это 1 connect, 2 ap, 3 local, обновляем данные в епр
+  // 1 connect, 2 ap, 3 local, обновляем данные в епр
   if (portalStatus() <= 3) EEwifi.updateNow();
 
   DEBUG("Portal status: ");
@@ -24,38 +23,38 @@ void startStrip() {
   strip->showLeds(50);
 }
 
-bool checkButton() {
-  uint32_t tmr = millis();
-  while (millis() - tmr < 2000) {
+bool buttonState() {
+  uint32_t Timer = millis();
+  while (millis() - Timer < 2000) {
     btn.tick();
     if (btn.state()) return true;
   }
   return false;
 }
 
-void setupAP() {
+void accessPoint() {
   DEBUG("AP Mode");
   WiFi.disconnect();
   WiFi.mode(WIFI_AP);
-  WiFi.softAP(GT_AP_SSID, GT_AP_PASS);
-  myIP = WiFi.softAPIP();
+  WiFi.softAP(GT_AP_SSID, GT_AP_PASS, GT_AP_CHANNEL, GT_AP_HIDDEN, GT_AP_MAX);
+  currentIP = WiFi.softAPIP();
   server.begin();
   fadeBlink(CRGB::Magenta);
 }
 
-void setupSTA() {
+void routerConnect() {
   DEBUG("Connecting to AP... ");
   WiFi.softAPdisconnect();
   WiFi.disconnect();
   WiFi.mode(WIFI_STA);
   WiFi.begin(portalCfg.SSID, portalCfg.pass);
-  uint32_t tmr = millis();
+  uint32_t Timer = millis();
   bool state = false;
-  while (millis() - tmr < 15000) {
+  while (millis() - Timer < 15000) {
     if (WiFi.status() == WL_CONNECTED) {
       fadeBlink(CRGB::Green);
       DEBUGLN("ok");
-      myIP = WiFi.localIP();
+      currentIP = WiFi.localIP();
       return;
     }
     fader(CRGB::Yellow);
@@ -63,5 +62,5 @@ void setupSTA() {
   }
   fadeBlink(CRGB::Red);
   DEBUGLN("fail");
-  setupAP();
+  accessPoint();
 }

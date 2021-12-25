@@ -1,12 +1,10 @@
-void switchEff() {
-  // поиск favorite эффектов
+void switchEffect() {
+  // поиск favourite эффектов
   while (true) {
-    if (cfg.rndCh) curEff = random(0, ACTIVE_PALETTES * 2);
-    else {
-      if (++curEff >= ACTIVE_PALETTES * 2) curEff = 0;
-    }
-    if (effs[curEff].fav) break;
+    if (cfg.randomChange) currentEffect = random(0, ACTIVE_PALETTES * 2);
+    else if (++currentEffect >= ACTIVE_PALETTES * 2) currentEffect = 0;
+    if (effects[currentEffect].favourite) break;
   }
-  DEBUG("switch to: ");
-  DEBUGLN(curEff);
+  DEBUG("[Switch] Switching effect to ");
+  DEBUGLN(currentEffect);
 }
