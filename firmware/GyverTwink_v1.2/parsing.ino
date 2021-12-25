@@ -49,7 +49,7 @@ void handlePackets() {
         forceTimer.stop();
         switch (ubuf[3]) {
           case 0: // Количество LEDs
-            cfg.ledAmount = ubuf[4] * 100 + ubuf[5];
+            cfg.ledAmount = (byte)ubuf[5] << 8 + (byte)ubuf[4];
             strip->setLeds(leds, cfg.ledAmount);
             answ[0] = 2;
             answ[1] = 0;
