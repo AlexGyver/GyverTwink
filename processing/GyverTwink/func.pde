@@ -18,7 +18,7 @@ void startSearch() {
   dropIP.selected = 0;
   ui();
   ips.clear();
-  
+
   curIP = brIP;
   sendData(new int[] {0});
   actionTmr = millis();
@@ -26,7 +26,7 @@ void startSearch() {
 
 void requestCfg() {
   parseMode = 1;
-  int[] buf = {'1'};
+  int[] buf = {1};
   sendData(buf);
 }
 
@@ -36,7 +36,7 @@ void sendData(int[] data) {
   sendData(byte(buf));
 }
 
-void sendData(byte[] data) {
+void sendData(byte[] data) {  
   if (curIP.charAt(0) != 'n') {
     udp.send(data, curIP, port);
     delay(15);

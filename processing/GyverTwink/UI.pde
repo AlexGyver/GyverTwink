@@ -61,9 +61,9 @@ void cfgTab() {
   LabelCenter("GyverTwink", 20);
   Divider(width-offs*2);
 
+  Label("Subnet:", 15);
   Label("Connection:", 15);
-  Label("Subnet:", 15);   
-  if (found) { 
+  if (found) {
     Divider(width-offs*2);
     Label("LED amount:", 15);
     Label("Power:", 15);
@@ -169,6 +169,8 @@ void calibTab() {
       frameScaled.resize(0, height*4/5);
       image(frameScaled, (width-frameScaled.width)/2, 0);
     }
+    //image(frame, (width-frame.width)/2, 0);
+    //if (calibF) image(ring, (width-ring.width)/2, 0);
 
     uiResetStep(height - width/6 - 2*_step_y);
     uiResetX(0);
