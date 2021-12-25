@@ -1,9 +1,10 @@
+// Гладиент
 void fader(CRGB color) {
-  static uint32_t tmr;
+  static uint32_t Timer;
   static int val = 0;
   static bool dir = true;
-  if (millis() - tmr >= 20) {
-    tmr = millis();
+  if (millis() - Timer >= 20) {
+    Timer = millis();
     val += dir ? 3 : -3;
     val = constrain(val, 5, 120);
     if (val >= 120 || val <= 5) dir = !dir;
@@ -11,6 +12,7 @@ void fader(CRGB color) {
   }
 }
 
+// Мигание
 void fadeBlink(CRGB color) {
   for (int i = 0; i < 200; i += 20) {
     strip->showColor(color, i);

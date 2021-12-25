@@ -7,3 +7,6 @@
 [submodule "libraries/SimplePortal"]
 	path = libraries/SimplePortal
 	url = https://github.com/GyverLibs/SimplePortal
+[submodule "libraries/FastLED"]
+	path = libraries/FastLED
+	url = https://github.com/FastLED/FastLED
