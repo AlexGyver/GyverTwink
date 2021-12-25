@@ -202,6 +202,10 @@ void handlePackets() {
             break;
         }
         break;
+      case 5: // Heartbeat
+        answ[0] = 4;
+        reply(answ, 1);
+        break;
     }
   }
 }
