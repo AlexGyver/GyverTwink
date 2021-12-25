@@ -32,7 +32,7 @@ void requestCfg() {
 
 void sendData(int[] data) {
   int[] buf = {'G', 'T'};
-  concat(buf, data);
+  buf = concat(buf, data);
   sendData(byte(buf));
 }
 
