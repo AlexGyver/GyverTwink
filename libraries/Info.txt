@@ -1,0 +1,3 @@
+Закинуть эти папки в папку с библиотеками:
+Windows: C:\Users\ИмяПользователя\Documents\Processing\libraries
+Linux: ~/sketchbook/libraries
