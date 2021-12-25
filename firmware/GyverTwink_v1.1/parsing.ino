@@ -105,7 +105,7 @@ void parsing() {
                 xy[curLed - 1][1] = ubuf[7];
               }
               strip->clearLedData();
-              leds[ubuf[4]] = CRGB::White;
+              leds[curLed] = CRGB::White;
               strip->showLeds(200);
             }
             break;
