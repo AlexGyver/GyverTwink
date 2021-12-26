@@ -39,7 +39,11 @@ public:
     // начать работу, прочитать данные в переменную. Принимает адрес начала хранения даты и ключ
     uint8_t begin(uint8_t addr, uint8_t key) {        
         _addr = addr;
+#ifdef ESP8266
         if (_addr + _size + 1 > EEPROM.length()) return 2;  // не хватит места
+#else
+        if (_addr + _size + 1 > 2048) return 2;  // почему-то мне на esp32 возвращает 0 всегда
+#endif
         _ready = 1;
         if (EEPROM.read(_addr + _size) != key) {            // ключ не совпал
             EEPROM.write(_addr + _size, key);               // пишем ключ
@@ -52,13 +56,9 @@ public:
     
     // обновить данные в еепром сейчас
     void updateNow() {
-        if (_ready) {            
-#ifdef ESP8266
+        if (_ready) {
             for (uint16_t i = 0; i < _size; i++) EEPROM.write(_addr + i, _data[i]);
             EEPROM.commit();
-#else
-            for (uint16_t i = 0; i < _size; i++) EEPROM.update(_addr + i, _data[i]);
-#endif
         }
     }
     
