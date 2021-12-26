@@ -20,10 +20,11 @@
 */
 
 // ================ НАСТРОЙКИ ================
-#define BTN_PIN D3      // пин кнопки
+
+#define BTN_PIN D3      // пин кнопки - для esp32 прописываем пин 21
 #define BTN_TOUCH 0     // 1 - сенсорная кнопка, 0 - нет
 
-#define LED_PIN D1      // пин ленты
+#define LED_PIN D1      // пин ленты - для esp32 прописываем пин 19
 #define LED_TYPE WS2812 // чип ленты
 #define LED_ORDER GRB   // порядок цветов ленты
 #define LED_MAX 500     // макс. светодиодов
@@ -34,7 +35,11 @@
 //#define DEBUG_SERIAL_GT   // раскомментируй, чтобы включить отладку
 
 // ================== LIBS ==================
+#ifdef ESP8266
 #include <ESP8266WiFi.h>
+#else
+#include <WiFi.h>
+#endif
 #include <WiFiUdp.h>
 #include <SimplePortal.h>
 #include <FastLED.h>

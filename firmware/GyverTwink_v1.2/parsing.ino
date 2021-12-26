@@ -3,7 +3,8 @@ byte ubuf[MAX_UDP_PACKET];
 
 void reply(byte* data, byte size) {
   udp.beginPacket(udp.remoteIP(), udp.remotePort());
-  udp.write("GT");
+  udp.write((uint8_t)'G');
+  udp.write((uint8_t)'T');
   udp.write(data, size);
   udp.endPacket();
 }
