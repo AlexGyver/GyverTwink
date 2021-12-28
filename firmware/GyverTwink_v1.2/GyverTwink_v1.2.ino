@@ -24,7 +24,7 @@
 #define BTN_TOUCH 0     // 1 - сенсорная кнопка, 0 - нет
 
 #define LED_PIN D1      // пин ленты
-#define LED_TYPE WS2812 // чип ленты
+#define LED_TYPE WS2812 // чип ленты (для WS2811 - RGB)
 #define LED_ORDER GRB   // порядок цветов ленты
 #define LED_MAX 500     // макс. светодиодов
 
@@ -42,6 +42,7 @@
 #include <EncButton.h>
 #include "palettes.h"
 #include "Timer.h"
+#include <ArduinoOTA.h> //библеотека для ArduОТА
 
 // ================== OBJECTS ==================
 WiFiServer server(80);
@@ -135,10 +136,14 @@ void setup() {
   cfg.turnOff = false;
   strip->setLeds(leds, cfg.ledAm);
   udp.begin(8888);
+
+  ArduinoOTA.begin();
 }
 
 // ================== LOOP ==================
 void loop() {
+  ArduinoOTA.handle();
+  
   button();   // опрос кнопки
 
   // менеджер епром
