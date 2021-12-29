@@ -46,7 +46,7 @@
 #include "Timer.h"
 
 #ifdef Arduino_OTA
-#include <ArduinoOTA.h> //библеотека для ArduОТА
+#include <ArduinoOTA.h> //библиотека для ArduОТА
 #endif
 
 // ================== OBJECTS ==================
