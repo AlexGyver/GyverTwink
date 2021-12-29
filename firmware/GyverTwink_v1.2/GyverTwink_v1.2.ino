@@ -33,6 +33,8 @@
 #define GT_AP_PASS "12345678"
 //#define DEBUG_SERIAL_GT   // раскомментируй, чтобы включить отладку
 
+#define Arduino_OTA         // раскомментируй, чтобы включить обновление по воздуху
+
 // ================== LIBS ==================
 #include <ESP8266WiFi.h>
 #include <WiFiUdp.h>
@@ -42,6 +44,10 @@
 #include <EncButton.h>
 #include "palettes.h"
 #include "Timer.h"
+
+#ifdef Arduino_OTA
+#include <ArduinoOTA.h> //библиотека для ArduОТА
+#endif
 
 // ================== OBJECTS ==================
 WiFiServer server(80);
@@ -135,10 +141,18 @@ void setup() {
   cfg.turnOff = false;
   strip->setLeds(leds, cfg.ledAm);
   udp.begin(8888);
+
+#ifdef Arduino_OTA
+  ArduinoOTA.begin();
+#endif
 }
 
 // ================== LOOP ==================
 void loop() {
+#ifdef Arduino_OTA
+  ArduinoOTA.handle();
+#endif  
+
   button();   // опрос кнопки
 
   // менеджер епром
