@@ -24,7 +24,7 @@
 #define BTN_TOUCH 0     // 1 - сенсорная кнопка, 0 - нет
 
 #define LED_PIN D1      // пин ленты
-#define LED_TYPE WS2812 // чип ленты (для WS2811 - RGB)
+#define LED_TYPE WS2812 // чип ленты
 #define LED_ORDER GRB   // порядок цветов ленты
 #define LED_MAX 500     // макс. светодиодов
 
@@ -32,6 +32,8 @@
 #define GT_AP_SSID "GyverTwink"
 #define GT_AP_PASS "12345678"
 //#define DEBUG_SERIAL_GT   // раскомментируй, чтобы включить отладку
+
+#define Arduino_OTA         // раскомментируй, чтобы включить обновление по воздуху
 
 // ================== LIBS ==================
 #include <ESP8266WiFi.h>
@@ -137,13 +139,17 @@ void setup() {
   strip->setLeds(leds, cfg.ledAm);
   udp.begin(8888);
 
+#ifdef Arduino_OTA
   ArduinoOTA.begin();
+#endif
 }
 
 // ================== LOOP ==================
 void loop() {
+#ifdef Arduino_OTA
   ArduinoOTA.handle();
-  
+#endif  
+
   button();   // опрос кнопки
 
   // менеджер епром
