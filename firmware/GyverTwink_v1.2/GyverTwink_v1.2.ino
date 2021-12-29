@@ -44,7 +44,10 @@
 #include <EncButton.h>
 #include "palettes.h"
 #include "Timer.h"
+
+#ifdef Arduino_OTA
 #include <ArduinoOTA.h> //библеотека для ArduОТА
+#endif
 
 // ================== OBJECTS ==================
 WiFiServer server(80);
