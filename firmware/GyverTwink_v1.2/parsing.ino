@@ -19,11 +19,11 @@ void parsing() {
     int n = udp.read(ubuf, MAX_UDP_PACKET);
     ubuf[n] = 0;
     if (ubuf[0] != 'G' || ubuf[1] != 'T') return;
-    /*for (int i = 2; i < n; i++) {
+    for (int i = 2; i < n; i++) {
       DEBUG(ubuf[i]);
       DEBUG(',');
       }
-      DEBUGLN();*/
+      DEBUGLN();
     byte answ[10];
 
     switch (ubuf[2]) {
