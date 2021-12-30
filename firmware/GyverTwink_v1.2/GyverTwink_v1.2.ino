@@ -3,12 +3,15 @@
   - Страница проекта (схемы, описания): https://alexgyver.ru/gyvertwink/
   - Исходники на GitHub: https://github.com/AlexGyver/GyverTwink
   Проблемы с загрузкой? Читай гайд для новичков: https://alexgyver.ru/arduino-first/
+  Нормально работает только на последних версиях ядра esp8266
   AlexGyver, AlexGyver Technologies, 2021
+  Alexey, MicrofCorp, 2021
 */
 
 /*
   1.1 - исправлена калибровка больше 255 светодиодов
   1.2 - исправлена ошибка с калибровкой
+  1.2 - WEBServer (by MicrofCorp) - добавленно HTTP управление
 */
 
 /*
@@ -20,10 +23,10 @@
 */
 
 // ================ НАСТРОЙКИ ================
-#define BTN_PIN D3      // пин кнопки
+#define BTN_PIN 5      // пин кнопки
 #define BTN_TOUCH 0     // 1 - сенсорная кнопка, 0 - нет
 
-#define LED_PIN D1      // пин ленты
+#define LED_PIN 4//D2      // пин ленты
 #define LED_TYPE WS2812 // чип ленты
 #define LED_ORDER GRB   // порядок цветов ленты
 #define LED_MAX 500     // макс. светодиодов
@@ -31,10 +34,11 @@
 // имя точки в режиме AP
 #define GT_AP_SSID "GyverTwink"
 #define GT_AP_PASS "12345678"
-//#define DEBUG_SERIAL_GT   // раскомментируй, чтобы включить отладку
+#define DEBUG_SERIAL_GT   // раскомментируй, чтобы включить отладку
 
 // ================== LIBS ==================
 #include <ESP8266WiFi.h>
+#include <ESP8266WebServer.h>
 #include <WiFiUdp.h>
 #include <SimplePortal.h>
 #include <FastLED.h>
@@ -45,6 +49,7 @@
 
 // ================== OBJECTS ==================
 WiFiServer server(80);
+ESP8266WebServer webserver(80);
 WiFiUDP udp;
 EEManager EEwifi(portalCfg);
 CRGB leds[LED_MAX];
@@ -135,11 +140,15 @@ void setup() {
   cfg.turnOff = false;
   strip->setLeds(leds, cfg.ledAm);
   udp.begin(8888);
+
+  htmlstart();
 }
 
 // ================== LOOP ==================
 void loop() {
   button();   // опрос кнопки
+
+  webserver.handleClient(); //обновление web сервера
 
   // менеджер епром
   EEcfg.tick();
