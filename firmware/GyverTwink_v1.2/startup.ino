@@ -44,7 +44,9 @@ void setupAP() {
 }
 
 void setupSTA() {
-  DEBUG("Connecting to AP... ");
+  DEBUG("Connecting to ");
+  DEBUG(portalCfg.SSID);
+  DEBUG(" ... ");
   WiFi.softAPdisconnect();
   WiFi.disconnect();
   WiFi.mode(WIFI_STA);
