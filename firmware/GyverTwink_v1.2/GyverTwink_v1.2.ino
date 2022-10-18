@@ -34,7 +34,7 @@
 // имя точки в режиме AP
 #define GT_AP_SSID "GyverTwink"
 #define GT_AP_PASS "12345678"
-#define DEBUG_SERIAL_GT   // раскомментируй, чтобы включить отладку
+//#define DEBUG_SERIAL_GT   // раскомментируй, чтобы включить отладку
 
 // ================== LIBS ==================
 #include <ESP8266WiFi.h>

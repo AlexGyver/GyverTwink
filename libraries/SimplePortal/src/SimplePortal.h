@@ -38,6 +38,8 @@ void portalStop();      // остановить портал
 bool portalTick();      // вызывать в цикле
 void portalRun(uint32_t prd = 60000);   // блокирующий вызов
 byte portalStatus();    // статус: 1 connect, 2 ap, 3 local, 4 exit, 5 timeout
+String SVGRSSI(int rssi);
+void WebConfigurator(ESP8266WebServer *server, String SSID, String Password);
 
 void SP_handleConnect();
 void SP_handleAP();
