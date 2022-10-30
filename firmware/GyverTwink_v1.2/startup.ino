@@ -49,6 +49,7 @@ void setupSTA() {
   WiFi.disconnect();
   WiFi.mode(WIFI_STA);
   WiFi.begin(portalCfg.SSID, portalCfg.pass);
+  webserver.begin();
   uint32_t tmr = millis();
   bool state = false;
   while (millis() - tmr < 15000) {
